@@ -5,6 +5,15 @@ import { campaigns } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
+function toDate(val: unknown) {
+  if (typeof val === "string" && val.length > 0) {
+    const d = new Date(val);
+    return isNaN(d.valueOf()) ? undefined : d;
+  }
+  if (val instanceof Date) return val;
+  return undefined;
+}
+
 const campaignSchema = z.object({
   clientId: z.string().min(1),
   name: z.string().min(2),
@@ -12,8 +21,8 @@ const campaignSchema = z.object({
   channel: z.string().optional(),
   phase: z.string().optional(),
   status: z.string().optional(),
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
+  startDate: z.preprocess(toDate, z.date().optional()),
+  endDate: z.preprocess(toDate, z.date().optional()),
 });
 
 export async function createCampaign(formData: FormData) {
@@ -22,11 +31,7 @@ export async function createCampaign(formData: FormData) {
   if (!parsed.success) return { error: "Validation failed." };
   const campaign = await db
     .insert(campaigns)
-    .values({
-      ...parsed.data,
-      startDate: parsed.data.startDate ? new Date(parsed.data.startDate) : undefined,
-      endDate: parsed.data.endDate ? new Date(parsed.data.endDate) : undefined,
-    })
+    .values(parsed.data)
     .returning();
   revalidatePath("/dashboard/campaigns");
   return { ok: true, campaign: campaign[0] };
@@ -35,17 +40,7 @@ export async function createCampaign(formData: FormData) {
 export async function updateCampaign(campaignId: string, updates: Record<string, any>) {
   const parsed = campaignSchema.partial().safeParse(updates);
   if (!parsed.success) return { error: "Validation failed." };
-
-  // Ensure dates are converted if present
-  const updateData = { ...parsed.data };
-  if (updateData.startDate && typeof updateData.startDate === "string") {
-    updateData.startDate = new Date(updateData.startDate);
-  }
-  if (updateData.endDate && typeof updateData.endDate === "string") {
-    updateData.endDate = new Date(updateData.endDate);
-  }
-
-  await db.update(campaigns).set(updateData).where(eq(campaigns.id, campaignId));
+  await db.update(campaigns).set(parsed.data).where(eq(campaigns.id, campaignId));
   revalidatePath("/dashboard/campaigns");
   return { ok: true };
 }
