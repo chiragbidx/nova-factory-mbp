@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 type DialogContextType = {
   open: boolean;
   setOpen: (v: boolean) => void;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
 };
 
 const DialogContext = React.createContext<DialogContextType | null>(null);
@@ -28,7 +28,7 @@ export interface DialogProps {
 
 export function Dialog({ open, onOpenChange, children }: DialogProps) {
   // Ref keeps track of the trigger for focus restoration
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
 
   // Focus trap and escape key behavior
   React.useEffect(() => {
