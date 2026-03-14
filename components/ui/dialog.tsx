@@ -122,9 +122,11 @@ export const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerPr
   ({ asChild, children, ...props }, ref) => {
     const ctx = useDialogContext();
 
-    function handleClick(e: React.MouseEvent) {
+    function handleClick(e: React.MouseEvent<any>) {
       ctx.setOpen(true);
-      if (props.onClick) props.onClick(e);
+      if (typeof props.onClick === "function") {
+        (props.onClick as (ev: React.MouseEvent<any>) => void)(e);
+      }
     }
 
     const setTriggerRef = (node: HTMLButtonElement | null) => {
