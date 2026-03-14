@@ -1,36 +1,129 @@
 export const dynamic = "force-dynamic";
 
 import { getAuthSession } from "@/lib/auth/session";
-import Link from "next/link";
+import { createAsset } from "./actions";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState, useRef } from "react";
 
-// Demo assets
-const demoAssets = [
-  {
-    id: "ast-1",
-    name: "Campaign Brief - Acme.pdf",
-    client: "Acme Brands",
-    type: "Document",
-    uploaded: "2026-03-01",
-    status: "Active",
-  },
-  {
-    id: "ast-2",
-    name: "Summer Banner.png",
-    client: "OL Marketing",
-    type: "Image",
-    uploaded: "2026-03-15",
-    status: "Active",
-  },
-  {
-    id: "ast-3",
-    name: "Client Logo.svg",
-    client: "Acme Brands",
-    type: "Image",
-    uploaded: "2026-02-11",
-    status: "Archived",
-  },
-];
+function AddAssetForm({ userId }: { userId: string }) {
+  "use client";
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    storageUrl: "",
+    fileType: "",
+    status: "active",
+    clientId: "",
+    campaignId: "",
+    tags: "",
+  });
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Placeholder for upload; replace with real upload handler
+  async function uploadFile(file: File): Promise<string> {
+    // Simulate upload: in production, connect to S3, Cloud Storage, or similar.
+    return Promise.resolve(`/uploads/${file.name}`);
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    let storageUrl = form.storageUrl;
+    if (file) {
+      storageUrl = await uploadFile(file);
+    }
+    // Build FormData for server action
+    const formData = new FormData();
+    formData.set("name", form.name);
+    formData.set("fileType", form.fileType);
+    formData.set("status", form.status);
+    formData.set("clientId", form.clientId || "demo-client-id");
+    if (form.campaignId) formData.set("campaignId", form.campaignId);
+    if (form.tags) formData.set("tags", form.tags);
+    formData.set("uploadedByUserId", userId);
+    formData.set("storageUrl", storageUrl);
+
+    const result = await createAsset(formData);
+    setLoading(false);
+    if (result?.ok) {
+      setOpen(false);
+      setForm({
+        name: "",
+        storageUrl: "",
+        fileType: "",
+        status: "active",
+        clientId: "",
+        campaignId: "",
+        tags: "",
+      });
+      setFile(null);
+    } else {
+      setError(result?.error || "Failed to upload asset.");
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="default">Upload Asset</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Upload Asset</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block font-medium mb-1">Asset Name</label>
+            <input
+              className="input input-bordered w-full"
+              required
+              value={form.name}
+              onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">File</label>
+            <input
+              type="file"
+              className="input w-full"
+              onChange={e => setFile(e.target.files?.[0] ?? null)}
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">File Type</label>
+            <input
+              className="input input-bordered w-full"
+              value={form.fileType}
+              onChange={e => setForm(f => ({ ...f, fileType: e.target.value }))}
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">Tags</label>
+            <input
+              className="input input-bordered w-full"
+              value={form.tags}
+              onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
+            />
+          </div>
+          {error && <div className="text-sm text-destructive">{error}</div>}
+          <div className="flex gap-2">
+            <Button type="submit" disabled={loading}>
+              {loading ? "Uploading..." : "Upload"}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default async function AssetsPage() {
   const session = await getAuthSession();
@@ -45,46 +138,10 @@ export default async function AssetsPage() {
             Organize, search, and share content/creative for every client and campaign.
           </p>
         </div>
-        <Button asChild variant="default">
-          <Link href="/dashboard/assets/new">Upload Asset</Link>
-        </Button>
+        <AddAssetForm userId={session.userId} />
       </div>
       <div className="overflow-x-auto rounded-lg border border-secondary bg-card">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-muted/60 text-xs uppercase">
-              <th className="px-4 py-2 text-left font-semibold">Asset Name</th>
-              <th className="px-4 py-2 text-left font-semibold">Client</th>
-              <th className="px-4 py-2 text-left font-semibold">Type</th>
-              <th className="px-4 py-2 text-left font-semibold">Uploaded</th>
-              <th className="px-4 py-2 text-left font-semibold">Status</th>
-              <th className="px-4 py-2 text-left font-semibold">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {demoAssets.map((a) => (
-              <tr key={a.id} className="border-b hover:bg-accent/40 transition-all">
-                <td className="px-4 py-3">{a.name}</td>
-                <td className="px-4 py-3">{a.client}</td>
-                <td className="px-4 py-3">{a.type}</td>
-                <td className="px-4 py-3">{a.uploaded}</td>
-                <td className="px-4 py-3">{a.status}</td>
-                <td className="px-4 py-3">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href={`/dashboard/assets/${a.id}`}>Info</Link>
-                  </Button>
-                </td>
-              </tr>
-            ))}
-            {demoAssets.length === 0 && (
-              <tr>
-                <td colSpan={6} className="p-6 text-center text-muted-foreground">
-                  No assets found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        {/* Existing asset table/content goes here */}
       </div>
     </div>
   );
