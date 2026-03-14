@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { teams, teamMembers, users } from "@/lib/db/schema";
