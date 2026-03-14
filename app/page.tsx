@@ -13,8 +13,6 @@ import { LayoutTestimonialSection } from "../components/home/LayoutTestimonialSe
 import { Navbar as LayoutNavbar } from "@/components/layout/navbar";
 
 export default function Home() {
-  // Simple toggles so agents/users can hide sections without touching JSX.
-  // Use ONLY_SECTIONS (comma list) to whitelist, or HIDE_SECTIONS to blacklist.
   const only = (process.env.ONLY_SECTIONS ?? "")
     .split(",")
     .map((s) => s.trim().toLowerCase())
@@ -44,13 +42,11 @@ export default function Home() {
     .filter(([id]) => !hide.has(id));
 
   return (
-    <div className="home-dark min-h-screen bg-gradient-to-b from-zinc-50 via-white to-[#ffe6d8] text-zinc-900 transition-colors dark:from-[#120d0b] dark:via-[#16100d] dark:to-[#1f1612] dark:text-[#f7efe8]">
+    <div className="home-dark min-h-screen bg-gradient-to-b from-zinc-50 via-white to-[#f8efe6] text-zinc-900 transition-colors dark:from-[#18172c] dark:via-[#120d0b] dark:to-[#030213] dark:text-[#f6f3ed]">
       <LayoutNavbar />
       <main className="flex min-h-screen w-full flex-col gap-12 px-6 py-12 sm:px-10 lg:px-16 lg:max-w-[1600px] lg:mx-auto">
         {visibleSections.map(([, node]) => node)}
       </main>
-
-      {/* lightweight animations defined locally to avoid tailwind config changes */}
       <style>{`
         @keyframes float {
           0% { transform: translateY(0px); }
@@ -86,10 +82,10 @@ export default function Home() {
         }
         .hover-lift:hover {
           transform: translateY(-6px);
-          box-shadow: 0 20px 40px -24px rgba(251, 114, 50, 0.45);
+          box-shadow: 0 20px 40px -24px rgba(87, 30, 191, 0.2);
         }
         .dark .home-dark .hover-lift:hover {
-          box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.75);
+          box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.65);
         }
       `}</style>
     </div>
