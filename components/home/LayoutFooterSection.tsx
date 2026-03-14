@@ -10,38 +10,32 @@ export const LayoutFooterSection = () => {
           <div className="col-span-full xl:col-span-2">
             <Link href="#" className="flex font-bold items-center">
               <ChevronsDownIcon className="w-9 h-9 mr-2 bg-gradient-to-tr from-primary via-primary/70 to-primary rounded-lg border border-secondary" />
-
-              <h3 className="text-2xl">Panda</h3>
+              <h3 className="text-2xl">Marketiq</h3>
             </Link>
           </div>
-
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Contact</h3>
             <div>
-              <Link href="mailto:hello@panda.dev" className="opacity-60 hover:opacity-100">
-                hello@panda.dev
+              <Link href="mailto:hi@chirag.co" className="opacity-60 hover:opacity-100">
+                hi@chirag.co
               </Link>
             </div>
-
             <div>
               <Link href="#" className="opacity-60 hover:opacity-100">
-                Github
+                LinkedIn
               </Link>
             </div>
-
             <div>
               <Link href="https://x.com" className="opacity-60 hover:opacity-100">
-                Twitter
+                X / Twitter
               </Link>
             </div>
-
             <div>
-              <Link href="https://discord.com" className="opacity-60 hover:opacity-100">
-                Discord
+              <Link href="https://github.com" className="opacity-60 hover:opacity-100">
+                GitHub
               </Link>
             </div>
           </div>
-
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Product</h3>
             <div>
@@ -49,20 +43,17 @@ export const LayoutFooterSection = () => {
                 Features
               </Link>
             </div>
-
             <div>
               <Link href="#pricing" className="opacity-60 hover:opacity-100">
                 Pricing
               </Link>
             </div>
-
             <div>
               <Link href="#contact" className="opacity-60 hover:opacity-100">
                 Contact
               </Link>
             </div>
           </div>
-
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Help</h3>
             <div>
@@ -70,20 +61,17 @@ export const LayoutFooterSection = () => {
                 Contact Us
               </Link>
             </div>
-
             <div>
               <Link href="#faq" className="opacity-60 hover:opacity-100">
                 FAQ
               </Link>
             </div>
-
             <div>
-              <Link href="https://nextjs.org/docs" className="opacity-60 hover:opacity-100">
-                Docs
+              <Link href="mailto:hi@chirag.co" className="opacity-60 hover:opacity-100">
+                Support
               </Link>
             </div>
           </div>
-
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Socials</h3>
             <div>
@@ -91,25 +79,22 @@ export const LayoutFooterSection = () => {
                 GitHub
               </Link>
             </div>
-
-            <div>
-              <Link href="https://discord.com" className="opacity-60 hover:opacity-100">
-                Discord
-              </Link>
-            </div>
-
             <div>
               <Link href="https://x.com" className="opacity-60 hover:opacity-100">
-                X
+                X / Twitter
+              </Link>
+            </div>
+            <div>
+              <Link href="https://linkedin.com" className="opacity-60 hover:opacity-100">
+                LinkedIn
               </Link>
             </div>
           </div>
         </div>
-
         <Separator className="my-6" />
         <section className="">
           <h3 className="">
-            &copy; 2026 Panda SaaS App Builder Starter.
+            &copy; 2026 Marketiq by Chirag Dodiya.
             <Link
               target="_blank"
               href="https://nextjs.org"
