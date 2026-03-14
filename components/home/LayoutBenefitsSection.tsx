@@ -1,58 +1,27 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { icons } from "lucide-react";
-
-interface BenefitsProps {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-const benefitList: BenefitsProps[] = [
-  {
-    icon: "Blocks",
-    title: "Ship With Confidence",
-    description:
-      "Start from proven architecture and avoid redoing auth, layout, and deployment setup.",
-  },
-  {
-    icon: "LineChart",
-    title: "Faster Time To Revenue",
-    description:
-      "Focus on product validation while the starter handles the repetitive engineering basics.",
-  },
-  {
-    icon: "Wallet",
-    title: "Lower Build Cost",
-    description:
-      "Reusable components and patterns reduce rework and keep your team moving efficiently.",
-  },
-  {
-    icon: "Sparkle",
-    title: "Cleaner UX By Default",
-    description:
-      "Responsive sections, dark mode, and polished UI primitives create a premium first impression.",
-  },
-];
+import { getHomeContent } from "@/content/home";
 
 export const LayoutBenefitsSection = () => {
+  const { hero } = getHomeContent();
+  const cards = hero.featureCards;
+  const iconList = ["Blocks", "Sparkle", "BookText", "Share2"];
+
   return (
     <section id="benefits" className="container py-24 sm:py-32">
       <div className="grid lg:grid-cols-2 place-items-center lg:gap-24">
         <div>
-          <h2 className="text-lg text-primary mb-2 tracking-wider">Why Panda</h2>
-
+          <h2 className="text-lg text-primary mb-2 tracking-wider">Why Marketiq</h2>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            A practical SaaS app builder starter
+            AI-Powered Collaboration for Agencies
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Built for teams that want production-ready foundations with room to
-            customize, not a rigid template you outgrow in a week.
+            Built for marketing leaders who want to scale agency impact with less manual busywork, real AI support, and total client visibility.
           </p>
         </div>
-
         <div className="grid lg:grid-cols-2 gap-4 w-full">
-          {benefitList.map(({ icon, title, description }, index) => (
+          {cards.map(({ title, subtitle, body }, index) => (
             <Card
               key={title}
               className="bg-muted/50 dark:bg-card hover:bg-background transition-all delay-75 group/number"
@@ -60,7 +29,7 @@ export const LayoutBenefitsSection = () => {
               <CardHeader>
                 <div className="flex justify-between">
                   <Icon
-                    name={icon as keyof typeof icons}
+                    name={iconList[index] as keyof typeof icons}
                     size={32}
                     className="mb-6 text-primary"
                   />
@@ -68,12 +37,13 @@ export const LayoutBenefitsSection = () => {
                     0{index + 1}
                   </span>
                 </div>
-
-                <CardTitle>{title}</CardTitle>
+                <CardTitle>
+                  {title}
+                  <span className="ml-2 block text-primary text-base font-normal">{subtitle}</span>
+                </CardTitle>
               </CardHeader>
-
               <CardContent className="text-muted-foreground">
-                {description}
+                {body}
               </CardContent>
             </Card>
           ))}
