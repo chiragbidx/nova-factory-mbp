@@ -35,7 +35,17 @@ export async function createCampaign(formData: FormData) {
 export async function updateCampaign(campaignId: string, updates: Record<string, any>) {
   const parsed = campaignSchema.partial().safeParse(updates);
   if (!parsed.success) return { error: "Validation failed." };
-  await db.update(campaigns).set(parsed.data).where(eq(campaigns.id, campaignId));
+
+  // Ensure dates are converted if present
+  const updateData = { ...parsed.data };
+  if (updateData.startDate && typeof updateData.startDate === "string") {
+    updateData.startDate = new Date(updateData.startDate);
+  }
+  if (updateData.endDate && typeof updateData.endDate === "string") {
+    updateData.endDate = new Date(updateData.endDate);
+  }
+
+  await db.update(campaigns).set(updateData).where(eq(campaigns.id, campaignId));
   revalidatePath("/dashboard/campaigns");
   return { ok: true };
 }
