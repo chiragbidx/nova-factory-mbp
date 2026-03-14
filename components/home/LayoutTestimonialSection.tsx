@@ -27,51 +27,50 @@ interface ReviewProps {
 const reviewList: ReviewProps[] = [
   {
     image: "/demo-img.jpg",
-    name: "Aarav Shah",
-    userName: "Founder, FinchFlow",
+    name: "Ashley Tran",
+    userName: "Partner, Slate Agency",
     comment:
-      "Panda saved us weeks of setup. We launched our first paying plan in less than a sprint.",
+      "Marketiq streamlined our client management and made reporting effortless. Our team loves the AI agents for campaign execution.",
     rating: 5.0,
   },
   {
     image: "/demo-img.jpg",
-    name: "Maya Patel",
-    userName: "Product Lead, OrbitDesk",
+    name: "Lucas Márquez",
+    userName: "Growth Lead, EightOwl",
     comment:
-      "The section structure and component quality made it easy to ship a polished onboarding flow quickly.",
-    rating: 4.8,
-  },
-
-  {
-    image: "/demo-img.jpg",
-    name: "Nikhil Rao",
-    userName: "CTO, TeamForge",
-    comment:
-      "We replaced our old starter with Panda and reduced front-end rework dramatically.",
+      "The onboarding was incredibly smooth. We left our stitched-together spreadsheets for a modern dashboard—finally!",
     rating: 4.9,
   },
   {
     image: "/demo-img.jpg",
-    name: "Emma Brooks",
-    userName: "Head of Growth, Nimbus",
+    name: "Priya Sharma",
+    userName: "Founder, CurveMark",
     comment:
-      "The default layout is conversion-friendly and easy to adapt to our brand.",
+      "MarketIQ’s asset library and analytics have saved us hours each week—clients get clear, branded reports in minutes.",
+    rating: 4.8,
+  },
+  {
+    image: "/demo-img.jpg",
+    name: "Jake Oberlin",
+    userName: "Director, SixPoint Labs",
+    comment:
+      "We now manage campaigns for 15+ brands from one place. Marketiq is indispensable for modern agencies.",
     rating: 5.0,
   },
   {
     image: "/demo-img.jpg",
-    name: "Daniel Kim",
-    userName: "Engineering Manager, PulseOps",
+    name: "Hannah Liu",
+    userName: "Consultant, Campaign Hive",
     comment:
-      "Great developer ergonomics. New engineers onboarded fast and started shipping immediately.",
+      "Client communications and deliverables stay within Marketiq—no more email flooding, happier clients.",
     rating: 5.0,
   },
   {
     image: "/demo-img.jpg",
-    name: "Sofia Green",
-    userName: "Founder, LaunchPad AI",
+    name: "Emmanuel Petit",
+    userName: "Agency Owner, The Brand Room",
     comment:
-      "Exactly what we needed for an MVP: clean code, strong UI, and a sensible section flow.",
+      "The demo sold us: team permissions plus branded exports, all with top-tier support. Highly recommend!",
     rating: 4.9,
   },
 ];
@@ -83,16 +82,13 @@ export const LayoutTestimonialSection = () => {
         <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
           Testimonials
         </h2>
-
         <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
-          Teams shipping with Panda
+          Agencies love Marketiq
         </h2>
       </div>
 
       <Carousel
-        opts={{
-          align: "start",
-        }}
+        opts={{ align: "start" }}
         className="relative w-[80%] sm:w-[90%] lg:max-w-screen-xl mx-auto"
       >
         <CarouselContent>
@@ -104,11 +100,9 @@ export const LayoutTestimonialSection = () => {
               <Card className="bg-muted/50 dark:bg-card">
                 <CardContent className="pt-6 pb-0">
                   <div className="flex gap-1 pb-6">
-                    <Star className="size-4 fill-primary text-primary" />
-                    <Star className="size-4 fill-primary text-primary" />
-                    <Star className="size-4 fill-primary text-primary" />
-                    <Star className="size-4 fill-primary text-primary" />
-                    <Star className="size-4 fill-primary text-primary" />
+                    {Array.from({ length: Math.round(review.rating) }).map((_, idx) => (
+                      <Star key={idx} className="size-4 fill-primary text-primary" />
+                    ))}
                   </div>
                   {`"${review.comment}"`}
                 </CardContent>
@@ -117,9 +111,14 @@ export const LayoutTestimonialSection = () => {
                   <div className="flex flex-row items-center gap-4">
                     <Avatar>
                       <AvatarImage src={review.image} alt={review.name} />
-                      <AvatarFallback>SV</AvatarFallback>
+                      <AvatarFallback>
+                        {review.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </AvatarFallback>
                     </Avatar>
-
                     <div className="flex flex-col">
                       <CardTitle className="text-lg">{review.name}</CardTitle>
                       <CardDescription>{review.userName}</CardDescription>
