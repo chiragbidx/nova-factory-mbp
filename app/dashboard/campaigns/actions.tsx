@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { campaigns } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 const campaignSchema = z.object({
   clientId: z.string().min(1),
@@ -34,13 +35,13 @@ export async function createCampaign(formData: FormData) {
 export async function updateCampaign(campaignId: string, updates: Record<string, any>) {
   const parsed = campaignSchema.partial().safeParse(updates);
   if (!parsed.success) return { error: "Validation failed." };
-  await db.update(campaigns).set(parsed.data).where(campaigns.id.eq(campaignId));
+  await db.update(campaigns).set(parsed.data).where(eq(campaigns.id, campaignId));
   revalidatePath("/dashboard/campaigns");
   return { ok: true };
 }
 
 export async function deleteCampaign(campaignId: string) {
-  await db.delete(campaigns).where(campaigns.id.eq(campaignId));
+  await db.delete(campaigns).where(eq(campaigns.id, campaignId));
   revalidatePath("/dashboard/campaigns");
   return { ok: true };
 }
