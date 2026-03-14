@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { clients } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 const clientSchema = z.object({
   companyName: z.string().min(2).max(255),
@@ -34,13 +35,13 @@ export async function updateClient(clientId: string, updates: Record<string, any
   await db
     .update(clients)
     .set(parsed.data)
-    .where(clients.id.eq(clientId));
+    .where(eq(clients.id, clientId));
   revalidatePath("/dashboard/clients");
   return { ok: true };
 }
 
 export async function deleteClient(clientId: string) {
-  await db.delete(clients).where(clients.id.eq(clientId));
+  await db.delete(clients).where(eq(clients.id, clientId));
   revalidatePath("/dashboard/clients");
   return { ok: true };
 }
