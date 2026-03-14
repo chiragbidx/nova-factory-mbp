@@ -25,21 +25,21 @@ export const LayoutTeamSection = () => {
   const teamList: TeamProps[] = [
     {
       imageUrl: "/team1.jpg",
-      firstName: "Leo",
-      lastName: "Miranda",
-      positions: ["Lead Engineer", "Starter Architecture"],
+      firstName: "Chirag",
+      lastName: "Dodiya",
+      positions: ["Founder & Lead Architect", "AI, Platform, SaaS Strategy"],
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/in/chiragdodiya",
         },
         {
           name: "Github",
-          url: "https://github.com/leoMirandaa",
+          url: "https://github.com/chiragdodiya",
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/chiragdodiya",
         },
       ],
     },
@@ -51,11 +51,11 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/",
         },
       ],
     },
@@ -67,11 +67,11 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
         {
           name: "Github",
-          url: "https://github.com/leoMirandaa",
+          url: "https://github.com/",
         },
       ],
     },
@@ -83,15 +83,15 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
         {
           name: "Github",
-          url: "https://github.com/leoMirandaa",
+          url: "https://github.com/",
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/",
         },
       ],
     },
@@ -103,7 +103,7 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
       ],
     },
@@ -115,11 +115,11 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
         {
           name: "Github",
-          url: "https://github.com/leoMirandaa",
+          url: "https://github.com/",
         },
       ],
     },
@@ -131,15 +131,15 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/leopoldo-miranda/",
+          url: "https://linkedin.com/",
         },
         {
           name: "Github",
-          url: "https://github.com/leoMirandaa",
+          url: "https://github.com/",
         },
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/",
         },
       ],
     },
@@ -151,7 +151,7 @@ export const LayoutTeamSection = () => {
       socialNetworks: [
         {
           name: "X",
-          url: "https://x.com/leo_mirand4",
+          url: "https://x.com/",
         },
       ],
     },
@@ -173,12 +173,10 @@ export const LayoutTeamSection = () => {
         <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
           Team
         </h2>
-
         <h2 className="text-3xl md:text-4xl text-center font-bold">
-          Meet the Panda team
+          Meet the Marketiq builders
         </h2>
       </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {teamList.map(
           (
@@ -215,7 +213,6 @@ export const LayoutTeamSection = () => {
                   {index < positions.length - 1 && <span>,</span>}
                 </CardContent>
               ))}
-
               <CardFooter className="space-x-4 mt-auto">
                 {socialNetworks.map(({ name, url }, index) => (
                   <Link
