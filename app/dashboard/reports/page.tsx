@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getAuthSession } from "@/lib/auth/session";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
