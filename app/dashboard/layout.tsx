@@ -45,18 +45,16 @@ export default async function DashboardLayout({
         <aside className="hidden w-[264px] shrink-0 border-r bg-card/50 md:flex md:flex-col">
           <div className="p-5">
             <div className="flex items-center gap-2.5">
-              <div className="grid size-8 place-items-center rounded-lg bg-foreground text-background text-sm font-bold shadow-sm">
-                P
+              <div className="grid size-8 place-items-center rounded-lg bg-primary text-background text-sm font-bold shadow-sm">
+                M
               </div>
-              <span className="font-semibold tracking-tight">Panda Admin</span>
+              <span className="font-semibold tracking-tight">Marketiq Portal</span>
             </div>
           </div>
-
           <div className="flex-1 overflow-y-auto px-3 py-4">
             <SidebarNav />
           </div>
         </aside>
-
         {/* Main content area */}
         <div className="flex flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 sm:px-6">
@@ -65,7 +63,6 @@ export default async function DashboardLayout({
               email={user.email}
               initials={initials}
             />
-
             <div className="ml-auto flex items-center gap-2">
               <UserMenu
                 fullName={fullName}
@@ -75,13 +72,11 @@ export default async function DashboardLayout({
               />
             </div>
           </header>
-
           <main className="flex-1 p-4 sm:p-6 lg:p-8">
             <div className="mx-auto max-w-6xl">{children}</div>
           </main>
         </div>
       </div>
-
       {/* Floating dark mode toggle */}
       <div className="fixed bottom-5 right-5 z-50">
         <ThemeToggle className="size-10 rounded-full shadow-lg border bg-background hover:bg-accent" />
