@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { assets } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 const assetSchema = z.object({
   clientId: z.string().min(1),
@@ -27,13 +28,13 @@ export async function createAsset(formData: FormData) {
 export async function updateAsset(id: string, updates: Record<string, any>) {
   const parsed = assetSchema.partial().safeParse(updates);
   if (!parsed.success) return { error: "Validation failed." };
-  await db.update(assets).set(parsed.data).where(assets.id.eq(id));
+  await db.update(assets).set(parsed.data).where(eq(assets.id, id));
   revalidatePath("/dashboard/assets");
   return { ok: true };
 }
 
 export async function deleteAsset(id: string) {
-  await db.delete(assets).where(assets.id.eq(id));
+  await db.delete(assets).where(eq(assets.id, id));
   revalidatePath("/dashboard/assets");
   return { ok: true };
 }
