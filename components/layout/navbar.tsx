@@ -33,10 +33,8 @@ interface FeatureProps {
   description: string;
 }
 
-// Landing page logo config.
-// Update these values to customize the navbar logo name and icon styling.
 const LANDING_LOGO = {
-  name: "Panda",
+  name: "Marketiq",
   iconClassName:
     "bg-gradient-to-tr border-secondary from-primary via-primary/70 to-primary rounded-lg w-9 h-9 mr-2 border text-white",
 };
@@ -62,16 +60,16 @@ const routeList: RouteProps[] = [
 
 const featureList: FeatureProps[] = [
   {
-    title: "Auth, Billing, Teams",
-    description: "Production-ready flows for sign-in, subscriptions, and organizations.",
+    title: "Multi-Client Management",
+    description: "Agencies manage unlimited clients, brands, and assets.",
   },
   {
-    title: "UI + Design System",
-    description: "Shadcn-based components with consistent theming and dark mode support.",
+    title: "AI Marketing Agents",
+    description: "Automate strategy, content, and reporting with intelligent agents.",
   },
   {
-    title: "Deploy Fast",
-    description: "Sane defaults for Next.js, TypeScript, and Vercel-first deployment.",
+    title: "Real-Time Collaboration",
+    description: "Integrated chat, feedback, and client communication tools.",
   },
 ];
 
@@ -98,7 +96,6 @@ export const Navbar = () => {
               className="cursor-pointer lg:hidden"
             />
           </SheetTrigger>
-
           <SheetContent
             side="left"
             className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-card border-secondary"
@@ -109,7 +106,6 @@ export const Navbar = () => {
                   <LandingLogoLink onClick={() => setIsOpen(false)} />
                 </SheetTitle>
               </SheetHeader>
-
               <div className="flex flex-col gap-2">
                 {routeList.map(({ href, label }) => (
                   <Button
@@ -139,16 +135,13 @@ export const Navbar = () => {
                 </Button>
               </div>
             </div>
-
             <SheetFooter className="flex-col sm:flex-col justify-start items-start">
               <Separator className="mb-2" />
-
               <ThemeToggle mode="inline" />
             </SheetFooter>
           </SheetContent>
         </Sheet>
       </div>
-
       {/* <!-- Desktop --> */}
       <NavigationMenu className="hidden lg:block mx-auto">
         <NavigationMenuList>
@@ -160,7 +153,7 @@ export const Navbar = () => {
               <div className="grid w-[600px] grid-cols-2 gap-5 p-4">
                 <Image
                   src="/demo-img.jpg"
-                  alt="Panda preview"
+                  alt="Marketiq preview"
                   className="h-full w-full rounded-md object-cover"
                   width={600}
                   height={600}
@@ -183,7 +176,6 @@ export const Navbar = () => {
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
-
           <NavigationMenuItem>
             {routeList.map(({ href, label }) => (
               <NavigationMenuLink key={href} asChild>
@@ -195,7 +187,6 @@ export const Navbar = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-
       <div className="hidden lg:flex items-center gap-2">
         <Button asChild size="sm" variant="ghost">
           <Link href="/auth#signin">Sign in</Link>
@@ -204,11 +195,10 @@ export const Navbar = () => {
           <Link href="/auth#signup">Sign up</Link>
         </Button>
         <ThemeToggle mode="inline" className="w-auto justify-center" />
-
         <Button asChild size="sm" variant="ghost" aria-label="View on GitHub">
           <Link
             aria-label="View on GitHub"
-            href="https://nextjs.org/docs"
+            href="https://github.com/"
             target="_blank"
           >
             <Github className="size-5" />
