@@ -136,11 +136,16 @@ export const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerPr
     };
 
     if (asChild && React.isValidElement(children)) {
-      return React.cloneElement(children as React.ReactElement, {
-        ref: setTriggerRef,
+      // Only forward `ref` if the element type supports it (intrinsic - like 'button')
+      const isIntrinsic = typeof children.type === "string";
+      const cloneProps: Record<string, any> = {
         onClick: handleClick,
         ...props,
-      });
+      };
+      if (isIntrinsic) {
+        cloneProps.ref = setTriggerRef;
+      }
+      return React.cloneElement(children as React.ReactElement, cloneProps);
     }
     // Default to normal button
     return (
