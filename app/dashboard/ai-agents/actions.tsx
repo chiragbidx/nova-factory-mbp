@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { aiAgentLogs } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 const logSchema = z.object({
   userId: z.string().min(1),
@@ -25,13 +26,13 @@ export async function createAIAgentLog(formData: FormData) {
 export async function updateAIAgentLog(id: string, updates: Record<string, any>) {
   const parsed = logSchema.partial().safeParse(updates);
   if (!parsed.success) return { error: "Validation failed." };
-  await db.update(aiAgentLogs).set(parsed.data).where(aiAgentLogs.id.eq(id));
+  await db.update(aiAgentLogs).set(parsed.data).where(eq(aiAgentLogs.id, id));
   revalidatePath("/dashboard/ai-agents");
   return { ok: true };
 }
 
 export async function deleteAIAgentLog(id: string) {
-  await db.delete(aiAgentLogs).where(aiAgentLogs.id.eq(id));
+  await db.delete(aiAgentLogs).where(eq(aiAgentLogs.id, id));
   revalidatePath("/dashboard/ai-agents");
   return { ok: true };
 }
