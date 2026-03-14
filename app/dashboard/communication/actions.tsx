@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { threads, messages } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 const threadSchema = z.object({
   subject: z.string().min(2),
@@ -36,13 +37,13 @@ export async function createMessage(formData: FormData) {
 }
 
 export async function deleteThread(id: string) {
-  await db.delete(threads).where(threads.id.eq(id));
+  await db.delete(threads).where(eq(threads.id, id));
   revalidatePath("/dashboard/communication");
   return { ok: true };
 }
 
 export async function deleteMessage(id: string) {
-  await db.delete(messages).where(messages.id.eq(id));
+  await db.delete(messages).where(eq(messages.id, id));
   // Cannot revalidate thread path without threadId, so just revalidate list.
   revalidatePath("/dashboard/communication");
   return { ok: true };
