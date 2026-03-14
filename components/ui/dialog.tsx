@@ -113,7 +113,7 @@ function DialogContentContainer() {
  * DialogTrigger finds the context and sets open to true. 
  * asChild allows customizing the element but generally use with a button.
  */
-export interface DialogTriggerProps {
+export interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   children: React.ReactNode;
 }
@@ -137,6 +137,7 @@ export const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerPr
       return React.cloneElement(children as React.ReactElement, {
         ref: setTriggerRef,
         onClick: handleClick,
+        ...props,
       });
     }
     // Default to normal button
