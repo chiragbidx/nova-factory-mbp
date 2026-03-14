@@ -127,24 +127,22 @@ export const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerPr
       if (props.onClick) props.onClick(e);
     }
 
+    const setTriggerRef = (node: HTMLButtonElement | null) => {
+      ctx.triggerRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref && typeof ref === "object") (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+    };
+
     if (asChild && React.isValidElement(children)) {
       return React.cloneElement(children as React.ReactElement, {
-        ref: (node: HTMLButtonElement) => {
-          ctx.triggerRef.current = node;
-          if (typeof ref === "function") ref(node);
-          else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
-        },
+        ref: setTriggerRef,
         onClick: handleClick,
       });
     }
     // Default to normal button
     return (
       <button
-        ref={node => {
-          ctx.triggerRef.current = node;
-          if (typeof ref === "function") ref(node);
-          else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
-        }}
+        ref={setTriggerRef}
         type="button"
         onClick={handleClick}
         {...props}
